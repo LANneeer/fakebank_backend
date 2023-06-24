@@ -9,6 +9,7 @@ class InvoiceViewSet(viewsets.ModelViewSet):
     queryset = Invoice.objects.all()
     serializer_class = InvoiceSerializer
 
+<<<<<<< Updated upstream
     def create(self, request, *args, **kwargs):
         invoice = Invoice.objects.create(**request.data)
         response_data = {
@@ -21,3 +22,6 @@ class InvoiceViewSet(viewsets.ModelViewSet):
 
     def update(self, request, *args, **kwargs):
         ...
+=======
+    
+>>>>>>> Stashed changes
