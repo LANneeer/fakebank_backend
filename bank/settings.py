@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     'rest_framework',
+    'djmoney',
+    'payments',
 ]
 
 MIDDLEWARE = [
@@ -79,9 +81,9 @@ WSGI_APPLICATION = "bank.wsgi.application"
 DATABASES = {
     "default": {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.getenv('POSTGRES_DB'),
-        'USER': os.getenv('POSTGRES_USER'),
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+        'NAME': os.getenv('POSTGRES_DB', default='hackathon_04'),
+        'USER': os.getenv('POSTGRES_USER', default='hackathon_user_04'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', default='password'),
         'HOST': os.getenv('POSTGRES_HOST', default='127.0.0.1'),
         'PORT': os.getenv('POSTGRES_PORT', default='5432'),
     }
@@ -128,3 +130,8 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+# django-money currencies
+CURRENCY_CODE = 'KZT'
+CURRENCIES = ('KZT',)
