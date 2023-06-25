@@ -139,7 +139,7 @@
         </div>
         <div class="field-container">
             <label for="name">Сумма Платежа</label>
-            <input id="name" class="input-field" maxlength="10" type="text" pattern="[0-9]*" inputmode="numeric">
+            <input value="{{ amount }}" disabled id="name" class="input-field" maxlength="10" type="text" pattern="[0-9]*" inputmode="numeric"}>
         </div>
         <button id="payButton">Оплатить</button>
     </div>
@@ -149,11 +149,12 @@
 <script type="application/javascript">
     document.getElementById('payButton').addEventListener('click', function () {
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', 'http://127.0.0.1:8000/api/redirect/', true);
+        xhr.open('POST', 'http://127.0.0.1/api/redirect/', true);
         xhr.setRequestHeader('Content-Type', 'application/json');
         const data = {
             "callback_url": "{{ callback_url }}",
-            "callback_data": "{{ callback_data }}"
+            "callback_data": "{{ callback_data }}",
+            "invoice_id": "{{ invoice_id }}"
         };
         const jsonData = JSON.stringify(data);
         xhr.onload = function () {

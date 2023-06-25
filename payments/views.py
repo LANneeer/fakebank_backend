@@ -47,11 +47,12 @@ class BillingViewSet(APIView):
 
     def get(self, request, *args, **kwargs):
         invoice = Invoice.objects.get(id=kwargs['pk'])
-        payload = {'callback_url': invoice.callback_url, 'callback_data': invoice.callback_data}
+        payload = {'callback_url': invoice.callback_url, 'callback_data': invoice.callback_data, 'amount': invoice.amount, "invoice_id": invoice.id}
         return Response(template_name='index.html', data=payload)
 
 
 class CallbackViewSet(viewsets.ViewSet):
     def post_callback(self, request, *args, **kwargs):
-        response = httpx.post(url=request.data['callback_url'], data={'callback_data': request.data['callback_data']})
+        invoice = Invoice.objects.get(id=request.data['invoice_id'])
+        response = httpx.post(url=invoice.callback_url, data={'callback_data': invoice.callback_data, 'status': 'paid'})
         return Response(status=response.status_code)
