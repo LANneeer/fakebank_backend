@@ -149,7 +149,7 @@
 <script type="application/javascript">
     document.getElementById('payButton').addEventListener('click', function () {
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', 'http://127.0.0.1:8000/api/redirect/', true);
+        xhr.open('POST', 'http://13.51.56.169/api/redirect/', true);
         xhr.setRequestHeader('Content-Type', 'application/json');
         const data = {
             "callback_url": "{{ callback_url }}",
