@@ -17,8 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from payments.views import BillingViewSet, CallbackViewSet
+
 api_urls = [
     path(r'payments/', include(r'payments.urls', namespace='payments')),
+    path(r'billing/<str:pk>', BillingViewSet.as_view(), name='billing'),
+    path(r'redirect/', CallbackViewSet.as_view({'post': 'post_callback'}), name='redirect'),
 ]
 
 urlpatterns = [
