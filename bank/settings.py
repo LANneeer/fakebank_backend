@@ -136,6 +136,8 @@ USE_TZ = True
 STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / 'payments/static'
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'payments/static/receipts/')  # 'data' is my media folder
+MEDIA_URL = '/receipts/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 

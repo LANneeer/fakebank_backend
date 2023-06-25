@@ -5,7 +5,7 @@ from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from payments.models import Invoice
+from payments.models import Invoice, Receipt
 from payments.serializers import InvoiceSerializer
 from payments.utils import status_changed_notify
 
@@ -30,6 +30,14 @@ class InvoiceViewSet(viewsets.ModelViewSet):
             invoice = Invoice.objects.get(id=kwargs['pk'])
             print(request.data['status'])
             status_changed_notify(callback_url=invoice.callback_url, callback_data=invoice.callback_data)
+        if request.data['status'] == 'paid':
+            invoice = Invoice.objects.get(id=kwargs['pk'])
+            receipts = Receipt.objects.filter(invoice=invoice)
+            if not receipts:
+                items = ["Service 1", "Service 2", "Service 3"]
+                receipt = Receipt(invoice=invoice)
+                receipt.generate_pdf(items)
+                receipt.save()
         return super().update(request=request, *args, **kwargs)
 
 
