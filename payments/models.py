@@ -60,7 +60,8 @@ class Invoice(TimestampMixin):
 class Receipt(models.Model):
     invoice = models.ForeignKey(
         to=Invoice,
-        on_delete=models.PROTECT
+        on_delete=models.PROTECT,
+        related_name='receipts'
     )
     pdf_file = models.FileField(upload_to='payments/static/receipts/')
 
