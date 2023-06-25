@@ -23,5 +23,9 @@ ENV POSTGRES_HOST=postgres
 ENV POSTGRES_PORT=5432
 ENV SECRET_KEY=${SECRET_KEY}
 
+# Install Gunicorn
+RUN pip install gunicorn
+EXPOSE 8000
+
 # Run migrations and start Gunicorn
-CMD python manage.py migrate && gunicorn <bank>.wsgi:application --bind 0.0.0.0:8000
+CMD python manage.py migrate && python manage.py collectstatic --noinput && gunicorn bank.wsgi:application --bind 0.0.0.0:8000

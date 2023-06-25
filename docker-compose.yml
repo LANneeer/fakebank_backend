@@ -2,11 +2,12 @@ version: '3.8'
 
 services:
   web:
+    image: fakebank
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - 8000:8000
+      - 127.0.0.1:8080:8000
     depends_on:
       - postgres
       - redis
