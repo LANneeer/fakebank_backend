@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-^5f8p68l(fg+fv6e^3_v=)sjsh7t_mgm=^6$90&gh4h#dkuq8="
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -135,8 +135,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 STATIC_URL = "static/"
 
-STATIC_ROOT = BASE_DIR / 'payments/static'
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'payments/static'),
+)
 MEDIA_ROOT = os.path.join(BASE_DIR, 'payments/static/receipts/')  # 'data' is my media folder
 MEDIA_URL = '/receipts/'
 # Default primary key field type
