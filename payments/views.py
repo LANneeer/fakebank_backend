@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 
 from payments.models import Invoice
 from payments.serializers import InvoiceSerializer
+from payments.utils import status_changed_notify
 
 
 class InvoiceViewSet(viewsets.ModelViewSet):
@@ -25,7 +26,11 @@ class InvoiceViewSet(viewsets.ModelViewSet):
         return Response(response_data, status=status.HTTP_200_OK)
 
     def update(self, request, *args, **kwargs):
-        return super().update()
+        if request.data['status'] == 'canceled' or request.data['status'] == 'paid':
+            invoice = Invoice.objects.get(id=kwargs['pk'])
+            print(request.data['status'])
+            status_changed_notify(callback_url=invoice.callback_url, callback_data=invoice.callback_data)
+        return super().update(request=request, *args, **kwargs)
 
 
 class BillingViewSet(APIView):
