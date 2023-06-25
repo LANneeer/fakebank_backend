@@ -14,14 +14,20 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
+from payments.views import BillingViewSet, CallbackViewSet
+
 api_urls = [
     path(r'payments/', include(r'payments.urls', namespace='payments')),
+    path(r'billing/<str:pk>', BillingViewSet.as_view(), name='billing'),
+    path(r'redirect/', CallbackViewSet.as_view({'post': 'post_callback'}), name='redirect'),
 ]
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('api/', include(api_urls))
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
