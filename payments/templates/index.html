@@ -139,7 +139,7 @@
         </div>
         <div class="field-container">
             <label for="name">Сумма Платежа</label>
-            <input id="name" class="input-field" maxlength="10" type="text" pattern="[0-9]*" inputmode="numeric">
+            <input value="{{ amount }}" disabled id="name" class="input-field" maxlength="10" type="text" pattern="[0-9]*" inputmode="numeric"}>
         </div>
         <button id="payButton">Оплатить</button>
     </div>
@@ -153,10 +153,12 @@
         xhr.setRequestHeader('Content-Type', 'application/json');
         const data = {
             "callback_url": "{{ callback_url }}",
-            "callback_data": "{{ callback_data }}"
+            "callback_data": "{{ callback_data }}",
+            "invoice_id": "{{ invoice_id }}"
         };
         const jsonData = JSON.stringify(data);
         xhr.onload = function () {
+            location.href = "{{ redirect_url }}"
             if (xhr.status === 200) {
                 console.log(xhr.responseText);
             } else {

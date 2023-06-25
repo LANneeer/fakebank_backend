@@ -21,10 +21,10 @@ class Invoice(TimestampMixin):
         default=uuid4,
         editable=False,
     )
-    amount = MoneyField(
-        max_digits=10,
+    amount = models.DecimalField(
+        max_digits=20,
         decimal_places=2,
-        default_currency='KZT'
+        default=0
     )
     redirect_url = models.URLField(
         max_length=1023,
