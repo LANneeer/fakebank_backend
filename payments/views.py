@@ -47,7 +47,7 @@ class BillingViewSet(APIView):
 
     def get(self, request, *args, **kwargs):
         invoice = Invoice.objects.get(id=kwargs['pk'])
-        payload = {'callback_url': invoice.callback_url, 'callback_data': invoice.callback_data, 'amount': invoice.amount, "invoice_id": invoice.id}
+        payload = {'redirect_url': invoice.redirect_url, 'callback_url': invoice.callback_url, 'callback_data': invoice.callback_data, 'amount': invoice.amount, "invoice_id": invoice.id}
         return Response(template_name='index.html', data=payload)
 
 

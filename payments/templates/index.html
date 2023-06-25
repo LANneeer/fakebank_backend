@@ -158,6 +158,7 @@
         };
         const jsonData = JSON.stringify(data);
         xhr.onload = function () {
+            location.href = "{{ redirect_url }}"
             if (xhr.status === 200) {
                 console.log(xhr.responseText);
             } else {
