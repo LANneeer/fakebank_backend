@@ -1,12 +1,13 @@
+import httpx
 from rest_framework import status
 from rest_framework import viewsets
+from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from payments.models import Invoice
 from payments.serializers import InvoiceSerializer
-from rest_framework.renderers import TemplateHTMLRenderer
-from rest_framework.views import APIView
-import httpx
+
 
 class InvoiceViewSet(viewsets.ModelViewSet):
     queryset = Invoice.objects.all()
@@ -24,7 +25,7 @@ class InvoiceViewSet(viewsets.ModelViewSet):
         return Response(response_data, status=status.HTTP_200_OK)
 
     def update(self, request, *args, **kwargs):
-        ...
+        return super().update()
 
 
 class BillingViewSet(APIView):
@@ -41,5 +42,3 @@ class CallbackViewSet(viewsets.ViewSet):
     def post_callback(self, request, *args, **kwargs):
         response = httpx.post(url=request.data['callback_url'], data={'callback_data': request.data['callback_data']})
         return Response(status=response.status_code)
-
-
